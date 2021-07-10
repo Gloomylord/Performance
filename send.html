@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Send metrics exampple</title>
+    <style type="text/css">
+        .square {
+            width: 100px;
+            height: 100px;
+
+            transform: translateX(-50%) translateY(-50%);
+
+            position: absolute;
+
+            top: 50%;
+            left: 50%;
+
+            background-color: red;
+        }
+
+        div.black {
+            background-color: black;
+        }
+    </style>
+</head>
+<body>
+<script src="send.js"></script>
+<script>
+    const observer = new PerformanceObserver(list => {
+        performance.getEntriesByType('paint').forEach(({name, entryType, startTime, duration, ...rest}) => {
+            counter.send(name, startTime);
+        }).forEach(console.log);
+        observer.disconnect();
+    });
+    observer.observe({
+        entryTypes: ["paint"]
+    });
+
+    let counter = new Counter();
+
+    counter.init('1f596567-6b37-4697-b7f6-c3181851944a', String(Math.random()).substr(2, 12), 'send test');
+
+    counter.send('connect', performance.timing.connectEnd - performance.timing.connectStart);
+    counter.send('ttfb', performance.timing.responseEnd - performance.timing.requestStart);
+    counter.send('DOMContentLoaded',
+    performance.timing.domContentLoadedEventEnd - performance.timing.navigationStart);
+
+    let timeStart = Date.now();
+
+    setTimeout(function() {
+    	document.querySelector('.square').classList.add('black');
+
+    	counter.send('load', Date.now() - timeStart);
+    }, Math.random() * 1000 + 500);
+</script>
+<div class="square"></div>
+</body>
+</html>

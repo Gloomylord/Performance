@@ -28,7 +28,7 @@
     const observer = new PerformanceObserver(list => {
         performance.getEntriesByType('paint').forEach(({name, entryType, startTime, duration, ...rest}) => {
             counter.send(name, startTime);
-        }).forEach(console.log);
+        });
         observer.disconnect();
     });
     observer.observe({

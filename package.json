@@ -1,0 +1,22 @@
+{
+  "name": "performance",
+  "version": "1.0.0",
+  "description": "",
+  "main": "send.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gloomylord/Performance.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Gloomylord/Performance/issues"
+  },
+  "homepage": "https://github.com/Gloomylord/Performance#readme",
+  "dependencies": {
+    "node-fetch": "^2.6.1"
+  }
+}

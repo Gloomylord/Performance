@@ -1,3 +1,5 @@
+const fetch = require('node-fetch');
+
 function quantile(arr, q) {
     const sorted = arr.sort((a, b) => a - b);
     const pos = (sorted.length - 1) * q;
@@ -9,7 +11,7 @@ function quantile(arr, q) {
     } else {
         return Math.floor(sorted[base]);
     }
-};
+}
 
 function prepareData(result) {
 	return result.data.map(item => {
@@ -29,9 +31,9 @@ function showSession() {
 
 // сравнить метрику в разных срезах
 function compareMetric() {
+
 }
 
-// рассчитать метрику за выбранный день
 function calcMetricByDate(data, page, name, date) {
 	let sampleData = data
 					.filter(item => item.page == page && item.name == name && item.date == date)
@@ -44,15 +46,13 @@ function calcMetricByDate(data, page, name, date) {
 }
 
 fetch('https://shri.yandex/hw/stat/data?counterId=1f596567-6b37-4697-b7f6-c3181851944a')
-	.then(res => res.json())
+	.then(res => (console.log(res), res.json()))
 	.then(result => {
 		let data = prepareData(result);
 
 		calcMetricByDate(data, 'send test', 'connect', '2021-07-10');
 		calcMetricByDate(data, 'send test', 'ttfb', '2021-07-10');
 		calcMetricByDate(data, 'send test', 'load', '2021-07-10');
-		calcMetricByDate(data, 'send test', 'load', '2021-07-10');
-		calcMetricByDate(data, 'send test', 'load', '2021-07-10');
-		// добавить свои сценарии, реализовать функции выше
-		// ...
+		calcMetricByDate(data, 'send test', 'DOMContentLoaded', '2021-07-10');
+		calcMetricByDate(data, 'send test', 'first-paint', '2021-07-10');
 	});

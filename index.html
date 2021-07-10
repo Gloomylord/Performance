@@ -37,12 +37,10 @@
 
     let counter = new Counter();
 
-    counter.init('1f596567-6b37-4697-b7f6-c3181851944a', String(Math.random()).substr(2, 12), 'send test');
+    counter.init('4cece4a5-6ad0-4d6f-891c-55289d1087c8', String(Math.random()).substr(2, 12), 'send test');
 
     counter.send('connect', performance.timing.connectEnd - performance.timing.connectStart);
     counter.send('ttfb', performance.timing.responseEnd - performance.timing.requestStart);
-    counter.send('DOMContentLoaded',
-    performance.timing.domContentLoadedEventEnd - performance.timing.navigationStart);
 
     let timeStart = Date.now();
 
@@ -50,6 +48,8 @@
     	document.querySelector('.square').classList.add('black');
 
     	counter.send('load', Date.now() - timeStart);
+        counter.send('DOMContentLoaded',
+            performance.timing.domContentLoadedEventStart - performance.timing.navigationStart);
     }, Math.random() * 1000 + 500);
 </script>
 <div class="square"></div>
